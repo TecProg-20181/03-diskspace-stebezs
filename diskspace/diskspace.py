@@ -53,11 +53,11 @@ def bytes_to_readable(blocks):
     return '{:.2f}{}'.format(round(byts/(1024.0**count), 2), labels[count])
 
 @contract(
-          file_tree='dict(str: dict(str: str|list(str)|int))',
-          file_tree_node='dict(str: str|list(str)|int)',
-          path='str',
+          file_tree='dict',
+          file_tree_node='dict',
+          path='string',
           largest_size='int,>=0',
-          total_size='int,>=0',
+          total_size='int,>=-1',
           depth='int,>=0',
           returns='None'
           )
@@ -152,6 +152,7 @@ def show_space_list(directory='.', depth=-1, order=True):
     print_tree(file_tree, file_tree[abs_directory], abs_directory,
                largest_size, total_size)
 
+@contract (returns='None')
 def main():
     if not args.all:
         show_space_list(args.directory, args.depth,
